@@ -1,0 +1,100 @@
+50% TC - pass
+class Solution {
+public:
+    int minSwap(vector<int>& A, vector<int>& B) {
+        
+        int sc = 0;
+        int _size = A.size();
+        for(int i=0;i<_size;i++){
+            
+            int flag=0;
+            if(i==0 && (A[i]>=A[i+1] || B[i]>=B[i+1])){
+                //cout << A[i] << "," << A[i+1] << endl;
+                //cout << B[i] << "," << B[i+1] << endl;
+                //cout << "setting flag" << endl;
+                flag=1;
+            }
+            else if(i == _size-1 && (A[i]<=A[i-1] || B[i]<=B[i-1])){
+                //cout << A[i] << "," << A[i+1] << endl;
+                //cout << B[i] << "," << B[i+1] << endl;
+                //cout << "setting flag" << endl;
+                flag=1;
+            }
+            
+            else if( i>0 && i< _size-1 && (A[i]<=A[i-1] || B[i]<=B[i-1] || A[i]>=A[i+1] || B[i]>=B[i+1])){
+                //cout << A[i] << "," << A[i+1] << endl;
+                //cout << B[i] << "," << B[i+1] << endl;
+                //cout << "setting flag i n3" << endl;
+                flag=1;
+            }
+            //cout << "flag is = "<<flag << " for i = " << i <<endl;   
+            if(flag){
+                int temp = A[i];
+                A[i] = B[i];
+                B[i] = temp;
+                sc+=1;
+                //cout << sc << "," << i<<"" << endl;
+                //cout <<A[i] <<","<<B[i]<<endl;
+                //cout << "post" << endl;
+                //cout << A[i] << "," << A[i+1] << endl;
+                //cout << B[i] << "," << B[i+1] << endl;
+                //cout <<"---"<<endl;
+            }
+                
+        }
+            
+        return sc;
+        
+    }
+};
+
+
+
+[0,4,4,5,9]
+[0,1,6,8,10]
+[1, 3, 5, 4] 
+[1, 2, 3, 7]
+[3,3,8,9,10]
+[1,7,4,6,8]
+
+
+
+80% TestCases Pass :
+class Solution {
+public:
+    int minSwap(vector<int>& A, vector<int>& B) {
+        
+        int sc = 0;
+        int _size = A.size();
+        vector<int> idx_val(_size,0);
+        
+        for(int i=1;i<_size;i++){
+            if(A[i] <= A[i-1] || B[i] <= B[i-1]){
+                idx_val[i] +=1;
+                idx_val[i-1] +=1;
+            }
+        }    
+        
+        int i=0;
+        while(i < _size-1){
+            if(idx_val[i] > 0){
+                //cout << idx_val[i] << endl;
+                if(idx_val[i] < idx_val[i+1]);       
+                    idx_val[i+2]-=1;
+                sc+=1;
+                //cout << "incr for "<<i << endl;
+                i=i+2;
+            }
+            else
+                i+=1;
+        }
+            
+        return sc;
+        
+    }
+};
+
+
+
+
+
